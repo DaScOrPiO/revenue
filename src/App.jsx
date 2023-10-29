@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Analytic from "./pages/analytic";
 import Apps from "./pages/apps";
@@ -16,7 +17,7 @@ function App() {
           <Route path="/" index element={<Revenue />} />
           <Route path="/home" element={<Home />} />
           <Route path="/crm" element={<Crm />} />
-          <Route path="/apps" element={<Apps />} />
+          {/* <Route element={<Apps />} /> */}
           <Route path="/analytic" element={<Analytic />} />
         </Routes>
       </BrowserRouter>
