@@ -164,7 +164,7 @@ export default function Navigation() {
               <Link to={item.route}>
                 {item.text}{" "}
                 {index === 4 && navPopup2 ? (
-                  <span className="border-s-2 border-gray-700 px-2">
+                  <span className="px-2">
                     {item.text2 !== null ? item.text2 : null}
                   </span>
                 ) : null}
