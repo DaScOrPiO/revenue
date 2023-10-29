@@ -51,6 +51,12 @@
   }
 }
 
+.mobile-nav-content-container {
+  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
+    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  transition: 0.8s ease-in;
+}
+
 .active-link-image {
   box-shadow: none;
   border: none;
@@ -68,4 +74,17 @@
   border-radius: 100px;
   background-color: #131316;
   color: #fff;
+}
+
+@media screen and (max-width: 1023px) {
+  .popup-nav-2 {
+    width: 50%;
+    left: 30%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .popup-nav-2 {
+    width: 50%;
+    left: 30%;
+  }
 }

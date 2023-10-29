@@ -44,7 +44,7 @@ export default function PopupNav({userDetails, setUserDetails, initials}) {
   ];
 
   return (
-    <div className="popup-nav rounded-xl px-4 py-4 fixed right-5 top-24 w-1/4">
+    <div className="popup-nav rounded-xl px-4 py-4 fixed right-5 top-24 lg:w-1/4">
       <div className="user-details flex items-center">
         <div className="user-initials rounded-full mr-2 px-1 bg-black text-white">
           {initials}
