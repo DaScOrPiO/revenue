@@ -6,6 +6,7 @@ import Crm from "./pages/crm";
 import Revenue from "./pages/revenue";
 import Home from "./pages/home";
 import Nav from "./components/general/nav";
+import FixedSideNav from "./components/general/fixedSideNav";
 import "./App.scss";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <>
       <BrowserRouter>
         <Nav />
+        <FixedSideNav />
         <Routes>
           <Route path="/" index element={<Revenue />} />
           <Route path="/home" element={<Home />} />
