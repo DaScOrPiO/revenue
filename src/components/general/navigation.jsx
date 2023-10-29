@@ -4,14 +4,16 @@ import { Link, useLocation } from "react-router-dom";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { MdOutlineAnalytics } from "react-icons/md";
 import { AiOutlineAppstoreAdd, AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
-import { MdOutlinePayments } from "react-icons/md";
+import { MdOutlinePayments, MdOutlineAnalytics } from "react-icons/md";
 import mainStackLogo from "../../assets/mainstack-logo.svg";
+import PopupNav from "./popupNav";
 
 export default function Navigation() {
   const [activeNav, setActiveNav] = useState(null);
+  const [navPopup, setNavPopup] = useState(false);
+
   const location = useLocation();
 
   const navData = [
@@ -44,6 +46,10 @@ export default function Navigation() {
 
   const handleNavClick = (item) => {
     setActiveNav(item);
+  };
+
+  const renderPopupNav = () => {
+    setNavPopup(!navPopup);
   };
 
   // initially set active nav on page load
@@ -87,7 +93,10 @@ export default function Navigation() {
             <BiMessageAltDetail size="25px" />
           </div>
 
-          <div className="switch flex justify-between items-center rounded-3xl bg-gray-300 w-1/4">
+          <div
+            className="switch flex cursor-pointer justify-between items-center rounded-3xl bg-gray-300 w-1/4"
+            onClick={renderPopupNav}
+          >
             <div className="circle-shape mr-2 w-2/4 text-center rounded-full bg-black text-white">
               OJ
             </div>
@@ -97,6 +106,7 @@ export default function Navigation() {
             </div>
           </div>
         </div>
+        {navPopup && <PopupNav />}
       </div>
     </nav>
   );
