@@ -13,8 +13,8 @@ function App() {
       <BrowserRouter>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route index element={<Revenue />} />
+          <Route path="/" index element={<Revenue />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/crm" element={<Crm />} />
           <Route path="/apps" element={<Apps />} />
           <Route path="/analytic" element={<Analytic />} />
