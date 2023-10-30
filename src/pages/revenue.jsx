@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React from "react";
+import RevenueComponent from "../components/revenueComponent";
 
 export default function Revenue() {
   return (
-    <div>revenue</div>
-  )
+    <div>
+      <RevenueComponent />
+    </div>
+  );
 }

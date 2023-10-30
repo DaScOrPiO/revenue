@@ -51,10 +51,73 @@
   }
 }
 
-.mobile-nav-content-container {
+.side-nav {
   box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
     0px 2px 6px 0px rgba(45, 59, 67, 0.06);
   transition: 0.8s ease-in;
+  .image-container {
+    .image {
+      filter: grayscale(100%);
+      &:hover {
+        cursor: pointer;
+        filter: initial;
+        transition: 0.5s ease-out;
+      }
+    }
+  }
+}
+
+.input {
+  &:checked {
+    accent-color: #131316;
+  }
+}
+
+.mobile-nav-content-container,
+.checkbox-container,
+.checkbox-container2,
+.calendar {
+  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
+    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  transition: 0.8s ease-in;
+}
+
+.selected-date {
+  font-size: 12px;
+  color: #131316;
+}
+
+.react-calendar__tile--active {
+  background: #131316 !important; // Change the background color for the selected date
+  color: #fff !important; // Change the text color for the selected date
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  color: #56616B;
+}
+
+.react-calendar__month-view__days__day--active-month {
+  color: #131316;
+  font-weight: bold !important;
+}
+
+.white-button {
+  border-radius: 100px;
+  border: 1px solid #eff1f6;
+  background: #fff;
+}
+
+.overlay {
+  background-color: #c5c5c5;
+}
+
+.gray-button {
+  background-color: #eff1f6;
+}
+
+.filter-container {
+  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
+    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
 }
 
 .active-link-image {
@@ -76,15 +139,63 @@
   color: #fff;
 }
 
+.green-text {
+  color: #0ea163;
+}
+
+.yellow-text {
+  color: #a77a07;
+}
+
 @media screen and (max-width: 1023px) {
   .popup-nav-2 {
     width: 50%;
     left: 30%;
+  }
+
+  .filter-container {
+    width: 45%;
   }
 }
 @media screen and (max-width: 767px) {
   .popup-nav-2 {
     width: 50%;
     left: 30%;
+  }
+
+  .revenue {
+    padding: 8% 8%;
+    .balance-details {
+      flex-direction: column;
+      .graph-section {
+        width: 100%;
+        margin: 2% 0;
+      }
+      .details-section {
+        width: 100%;
+        margin: 2% 0;
+      }
+    }
+
+    .filter-section {
+      .hero-section {
+        border-bottom: 1px solid #eff1f6;
+        .message {
+        }
+        .button-container {
+          margin: 5% 0;
+        }
+      }
+    }
+  }
+
+  .filter-container {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .filter-container {
+    height: 100vh;
   }
 }
