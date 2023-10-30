@@ -6,9 +6,15 @@ import DepositLogo from "../general/transactionLogo/depositLogo";
 import WithdrawalLogo from "../general/transactionLogo/withdrawalLogo";
 import { baseUrl, get_transactions } from "../general/endpoint url/file";
 import axios from "axios";
+import Filter from "./filter";
 
 export default function SubComponent2() {
   const [transactionsData, setTransactionsData] = useState([]);
+  const [renderFilter, setRenderFilter] = useState(false);
+
+  const handleRenderFilter = () => {
+    setRenderFilter(!renderFilter);
+  };
 
   const getTransactions = async () => {
     try {
@@ -53,6 +59,7 @@ export default function SubComponent2() {
             <button
               className="flex items-center justify-between px-4 py-2 rounded-3xl"
               style={{ backgroundColor: "#EFF1F6", color: "#131316" }}
+              onClick={handleRenderFilter}
             >
               Filter
               <span className="ml-2">
@@ -116,6 +123,10 @@ export default function SubComponent2() {
           </div>
         ))}
       </section>
+
+      {renderFilter && (
+        <Filter setRender={setRenderFilter} render={renderFilter} />
+      )}
     </section>
   );
 }
