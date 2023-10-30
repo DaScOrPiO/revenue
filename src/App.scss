@@ -61,7 +61,7 @@
       &:hover {
         cursor: pointer;
         filter: initial;
-        transition: .5s ease-out;
+        transition: 0.5s ease-out;
       }
     }
   }
@@ -92,6 +92,14 @@
   color: #fff;
 }
 
+.green-text {
+  color: #0ea163;
+}
+
+.yellow-text {
+  color: #a77a07;
+}
+
 @media screen and (max-width: 1023px) {
   .popup-nav-2 {
     width: 50%;
@@ -104,17 +112,27 @@
     left: 30%;
   }
 
-  .revenue{
+  .revenue {
     padding: 8% 8%;
-    .balance-details{
+    .balance-details {
       flex-direction: column;
-      .graph-section{
+      .graph-section {
         width: 100%;
         margin: 2% 0;
       }
-      .details-section{
+      .details-section {
         width: 100%;
         margin: 2% 0;
+      }
+    }
+
+    .filter-section {
+      .hero-section {
+        .message {
+        }
+        .button-container {
+          margin: 5% 0;
+        }
       }
     }
   }

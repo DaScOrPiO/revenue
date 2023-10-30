@@ -2,6 +2,7 @@
 import React from "react";
 import Button from "./button/button";
 import SubComponent1 from "./revenue/subComponent1";
+import SubComponent2 from "./revenue/subComponent2";
 
 export default function RevenueComponent() {
   return (
@@ -17,6 +18,9 @@ export default function RevenueComponent() {
           </span>
         </div>
         <SubComponent1 />
+      </section>
+      <section>
+        <SubComponent2 />
       </section>
     </section>
   );
