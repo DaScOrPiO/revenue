@@ -1,13 +1,89 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 export default function Filter({ setRender, render }) {
+  const [renderInputContainer, setRenderInputContainer] = useState(false);
+  const [renderInputContainer2, setRenderInputContainer2] = useState(false);
+  const [renderCalendar1, setRendarCalendar1] = useState(false);
+  const [renderCalendar2, setRendarCalendar2] = useState(false);
+  const [date, setDate] = useState(new Date());
+
   const closeMe = () => {
     setRender(false);
+  };
+
+  const handleRenderContainer = () => {
+    setRenderInputContainer(!renderInputContainer);
+
+    if (renderCalendar1) {
+      setRendarCalendar1(false);
+    }
+
+    if (renderInputContainer2) {
+      setRenderInputContainer2(false);
+    }
+
+    if (renderCalendar2) {
+      setRendarCalendar2(false);
+    }
+  };
+
+  const handleRenderContainer2 = () => {
+    setRenderInputContainer2(!renderInputContainer2);
+
+    if (renderCalendar1) {
+      setRendarCalendar1(false);
+    }
+
+    if (renderInputContainer) {
+      setRenderInputContainer(false);
+    }
+
+    if (renderCalendar2) {
+      setRendarCalendar2(false);
+    }
+  };
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+  };
+
+  const displayCalendar1 = () => {
+    setRendarCalendar1(!renderCalendar1);
+
+    if (renderCalendar2) {
+      setRendarCalendar2(false);
+    }
+
+    if (renderInputContainer) {
+      setRenderInputContainer(false);
+    }
+
+    if (renderInputContainer2) {
+      setRenderInputContainer(false);
+    }
+  };
+
+  const displayCalendar2 = () => {
+    setRendarCalendar2(!renderCalendar2);
+
+    if (renderCalendar1) {
+      setRendarCalendar1(false);
+    }
+
+    if (renderInputContainer) {
+      setRenderInputContainer(false);
+    }
+
+    if (renderInputContainer2) {
+      setRenderInputContainer2(false);
+    }
   };
 
   return (
@@ -55,48 +131,232 @@ export default function Filter({ setRender, render }) {
             </div>
           </div>
 
-          <div className="mt-5">
+          <div className="date mt-5 relative">
             <small className="font-bold mt-5">Date Range</small>
 
             <div className="flex mt-2">
-              <button className="calendar-from w-2/4 py-2 px-3 gray-button rounded-xl flex justify-between items-center mr-2">
+              <button
+                className={`calendar-from w-2/4 py-2 px-3 rounded-xl flex 
+              justify-between items-center mr-2  ${
+                renderCalendar1 ? "bg-white" : "gray-button"
+              }`}
+                onClick={displayCalendar1}
+              >
                 <h1>17 Jul, 2023</h1>
                 <span>
-                  <RiArrowDropDownLine size="25px" />
+                  {!renderCalendar1 ? (
+                    <RiArrowDropDownLine size="25px" />
+                  ) : (
+                    <RiArrowDropUpLine size="25px" />
+                  )}
                 </span>
               </button>
 
-              <button className="render-calendar-to w-2/4 py-2 px-3 gray-button rounded-xl flex justify-between items-center mr-2">
+              <button
+                className={`render-calendar-to w-2/4 py-2 px-3 rounded-xl 
+              flex justify-between items-center mr-2  ${
+                renderCalendar2 ? "bg-white" : "gray-button "
+              }`}
+                onClick={displayCalendar2}
+              >
                 <h1>17 Jul, 2023</h1>
                 <span>
-                  <RiArrowDropDownLine size="25px" />
+                  {!renderCalendar2 ? (
+                    <RiArrowDropDownLine size="25px" />
+                  ) : (
+                    <RiArrowDropUpLine size="25px" />
+                  )}
                 </span>
               </button>
             </div>
+
+            <>
+              <AnimatePresence>
+                {renderCalendar1 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="initial-date-calendar w-full absolute rounded-xl z-10"
+                  >
+                    <Calendar
+                      onChange={handleDateChange}
+                      className="calendar-component border-none rounded-xl w-full bg-white"
+                      value={date}
+                      tileClassName="selected-date rounded-full"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+
+            <AnimatePresence>
+              {renderCalendar2 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="initial-date-calendar w-full absolute rounded-xl z-10"
+                >
+                  <Calendar
+                    onChange={handleDateChange}
+                    className="calendar-component border-none rounded-xl w-full bg-white"
+                    value={date}
+                    tileClassName="selected-date rounded-full"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          <div className="mt-5">
+          <div className="mt-5 relative w-full">
             <small className="font-bold mt-5">Transaction Type</small>
 
-            <button className="w-full mt-3 px-5 py-2 gray-button rounded-xl flex justify-between items-center mr-2">
+            <button
+              className={`w-full mt-3 px-5 py-2 rounded-xl flex 
+            justify-between items-center mr-2 ${
+              renderInputContainer ? "bg-white" : "gray-button "
+            }`}
+              onClick={handleRenderContainer}
+            >
               <h1 className="truncate">
                 Store Transactions, Get Tipped, Withdrawals, chargebacks
               </h1>
               <span>
-                <RiArrowDropDownLine size="25px" />
+                {!renderInputContainer ? (
+                  <RiArrowDropDownLine size="25px" />
+                ) : (
+                  <RiArrowDropUpLine size="25px" />
+                )}
               </span>
             </button>
+
+            <AnimatePresence>
+              {renderInputContainer && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="checkbox-container px-5 py-3 w-full absolute rounded-xl bg-white"
+                >
+                  <div className="input-container flex mt-2 mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="store-transactions"
+                    />
+                    <label htmlFor="store-transactions" className="font-bold">
+                      Store Transactions
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="get-tipped"
+                    />
+                    <label htmlFor="get-tipped" className="font-bold">
+                      Get Tipped
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="withdrawal"
+                    />
+                    <label htmlFor="withdrawal" className="font-bold">
+                      Withdrawal
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="charge-backs"
+                    />
+                    <label htmlFor="charge-backs" className="font-bold">
+                      Chargebacks
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="cash-backs"
+                    />
+                    <label htmlFor="cash-backs" className="font-bold">
+                      Cashbacks
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input type="checkbox" className="input mr-2" id="refer" />
+                    <label htmlFor="refer" className="font-bold">
+                      Refer & Earn
+                    </label>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="mt-5">
             <small className="font-bold mt-5">Transaction Status</small>
 
-            <button className="w-full mt-3 px-5 py-2 gray-button rounded-xl flex justify-between items-center mr-2">
+            <button
+              className={`w-full mt-3 px-5 py-2 rounded-xl flex 
+            justify-between items-center mr-2 ${
+              renderInputContainer2 ? "bg-white" : "gray-button "
+            }`}
+              onClick={handleRenderContainer2}
+            >
               <h1 className="truncate">Successful, Pending, Failed</h1>
               <span>
-                <RiArrowDropDownLine size="25px" />
+                {!renderInputContainer2 ? (
+                  <RiArrowDropDownLine size="25px" />
+                ) : (
+                  <RiArrowDropUpLine size="25px" />
+                )}
               </span>
             </button>
+
+            <AnimatePresence>
+              {renderInputContainer2 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="checkbox-container2 px-5 py-3 w-full absolute rounded-xl bg-white"
+                >
+                  <div className="input-container flex mt-2 mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="successful"
+                    />
+                    <label htmlFor="successful" className="font-bold">
+                      Successful
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      id="pending"
+                    />
+                    <label htmlFor="Pending" className="font-bold">
+                      Pending
+                    </label>
+                  </div>
+                  <div className="input-container flex mb-2">
+                    <input type="checkbox" className="input mr-2" id="failed" />
+                    <label htmlFor="failed" className="font-bold">
+                      Failed
+                    </label>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="flex mt-56">
