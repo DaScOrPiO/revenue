@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { AiOutlineDownload } from "react-icons/ai";
 import DepositLogo from "../general/transactionLogo/depositLogo";
@@ -7,8 +7,10 @@ import WithdrawalLogo from "../general/transactionLogo/withdrawalLogo";
 import { baseUrl, get_transactions } from "../general/endpoint url/file";
 import axios from "axios";
 import Filter from "./filter";
+import FilterData from "./filterContext";
 
 export default function SubComponent2() {
+  const { count } = useContext(FilterData);
   const [transactionsData, setTransactionsData] = useState([]);
   const [renderFilter, setRenderFilter] = useState(false);
 
@@ -44,6 +46,8 @@ export default function SubComponent2() {
     return new Date(date).toLocaleDateString(undefined, options);
   };
 
+  console.log(count);
+
   return (
     <section className="filter-section w-full flex flex-col mt-12">
       <section className="hero-section w-full md:flex justify-between">
@@ -61,7 +65,12 @@ export default function SubComponent2() {
               style={{ backgroundColor: "#EFF1F6", color: "#131316" }}
               onClick={handleRenderFilter}
             >
-              Filter
+              Filter{" "}
+              {count > 0 && (
+                <span className="rounded-full bg-black text-white ml-2 px-2">
+                  {count}
+                </span>
+              )}
               <span className="ml-2">
                 <RiArrowDropDownLine size="25px" />
               </span>

@@ -1,21 +1,106 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import FilterData from "./filterContext";
+import { toast } from "react-toastify";
 
 export default function Filter({ setRender, render }) {
   const [renderInputContainer, setRenderInputContainer] = useState(false);
   const [renderInputContainer2, setRenderInputContainer2] = useState(false);
   const [renderCalendar1, setRendarCalendar1] = useState(false);
   const [renderCalendar2, setRendarCalendar2] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [trackValues, setTrackValues] = useState();
+  const [trackValues2, setTrackValues2] = useState();
+  const [daysDiff, setDaysDiff] = useState(null);
+
+  const {
+    Input,
+    count,
+    handleInputChange,
+    handleFilterTypes,
+    filterTypes,
+    handleDateChange,
+    handleDateChange2,
+    calculateDateDifference,
+  } = useContext(FilterData);
+
+  console.log(Input, filterTypes);
 
   const closeMe = () => {
     setRender(false);
+  };
+
+  useEffect(() => {
+    handleFilterTypes();
+    getSelectedOptions();
+  }, [Input]);
+
+  useEffect(() => {
+    Input.dateFrom && Input.dateTo !== "" ? dateIsValid() : "";
+  }, [Input.dateFrom, Input.dateTo]);
+
+  function formatDate(inputDate) {
+    const options = { year: "numeric", month: "short", day: "2-digit" };
+    return new Date(inputDate).toLocaleDateString(undefined, options);
+  }
+
+  const dateIsValid = () => {
+    const result = calculateDateDifference(Input.dateFrom, Input.dateTo);
+
+    if (result.isValid) {
+      setDaysDiff(result.daysDifference);
+    } else {
+      toast.error(result.message);
+    }
+  };
+
+  const getSelectedOptions = () => {
+    const selectedOptions = [];
+    const selectedOptions2 = [];
+
+    if (Input.storeTransactions) {
+      selectedOptions.push("Store Transactions");
+    }
+
+    if (Input.getTipped) {
+      selectedOptions.push("Get Tipped");
+    }
+
+    if (Input.withdrawal) {
+      selectedOptions.push("Withdrawals");
+    }
+
+    if (Input.chargebacks) {
+      selectedOptions.push("Chargebacks");
+    }
+
+    if (Input.cashback) {
+      selectedOptions.push("Cashbacks");
+    }
+
+    if (Input.refer) {
+      selectedOptions.push("Refer & Earn");
+    }
+
+    if (Input.successful) {
+      selectedOptions2.push("Successful");
+    }
+
+    if (Input.pending) {
+      selectedOptions2.push("Pending");
+    }
+
+    if (Input.failed) {
+      selectedOptions2.push("Failed");
+    }
+
+    setTrackValues(selectedOptions);
+    setTrackValues2(selectedOptions2);
   };
 
   const handleRenderContainer = () => {
@@ -48,10 +133,6 @@ export default function Filter({ setRender, render }) {
     if (renderCalendar2) {
       setRendarCalendar2(false);
     }
-  };
-
-  const handleDateChange = (newDate) => {
-    setDate(newDate);
   };
 
   const displayCalendar1 = () => {
@@ -142,7 +223,9 @@ export default function Filter({ setRender, render }) {
               }`}
                 onClick={displayCalendar1}
               >
-                <h1>17 Jul, 2023</h1>
+                <h1>
+                  {Input.dateFrom !== "" ? formatDate(Input.dateFrom) : ""}
+                </h1>
                 <span>
                   {!renderCalendar1 ? (
                     <RiArrowDropDownLine size="25px" />
@@ -159,7 +242,7 @@ export default function Filter({ setRender, render }) {
               }`}
                 onClick={displayCalendar2}
               >
-                <h1>17 Jul, 2023</h1>
+                <h1>{Input.dateTo !== "" ? formatDate(Input.dateTo) : ""}</h1>
                 <span>
                   {!renderCalendar2 ? (
                     <RiArrowDropDownLine size="25px" />
@@ -182,7 +265,7 @@ export default function Filter({ setRender, render }) {
                     <Calendar
                       onChange={handleDateChange}
                       className="calendar-component border-none rounded-xl w-full bg-white"
-                      value={date}
+                      value={Input.dateFrom}
                       tileClassName="selected-date rounded-full"
                     />
                   </motion.div>
@@ -199,9 +282,9 @@ export default function Filter({ setRender, render }) {
                   className="initial-date-calendar w-full absolute rounded-xl z-10"
                 >
                   <Calendar
-                    onChange={handleDateChange}
+                    onChange={handleDateChange2}
                     className="calendar-component border-none rounded-xl w-full bg-white"
-                    value={date}
+                    value={Input.dateTo}
                     tileClassName="selected-date rounded-full"
                   />
                 </motion.div>
@@ -219,9 +302,7 @@ export default function Filter({ setRender, render }) {
             }`}
               onClick={handleRenderContainer}
             >
-              <h1 className="truncate">
-                Store Transactions, Get Tipped, Withdrawals, chargebacks
-              </h1>
+              <h1 className="truncate">{trackValues?.join(", ")}</h1>
               <span>
                 {!renderInputContainer ? (
                   <RiArrowDropDownLine size="25px" />
@@ -243,6 +324,9 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
+                      checked={Input.storeTransactions}
+                      name="storeTransactions"
+                      onChange={handleInputChange}
                       id="store-transactions"
                     />
                     <label htmlFor="store-transactions" className="font-bold">
@@ -253,6 +337,9 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
+                      checked={Input.getTipped}
+                      name="getTipped"
+                      onChange={handleInputChange}
                       id="get-tipped"
                     />
                     <label htmlFor="get-tipped" className="font-bold">
@@ -263,6 +350,9 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
+                      checked={Input.withdrawal}
+                      name="withdrawal"
+                      onChange={handleInputChange}
                       id="withdrawal"
                     />
                     <label htmlFor="withdrawal" className="font-bold">
@@ -273,6 +363,9 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
+                      checked={Input.chargebacks}
+                      name="chargebacks"
+                      onChange={handleInputChange}
                       id="charge-backs"
                     />
                     <label htmlFor="charge-backs" className="font-bold">
@@ -283,6 +376,9 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
+                      checked={Input.cashback}
+                      name="cashback"
+                      onChange={handleInputChange}
                       id="cash-backs"
                     />
                     <label htmlFor="cash-backs" className="font-bold">
@@ -290,7 +386,14 @@ export default function Filter({ setRender, render }) {
                     </label>
                   </div>
                   <div className="input-container flex mb-2">
-                    <input type="checkbox" className="input mr-2" id="refer" />
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      checked={Input.refer}
+                      name="refer"
+                      onChange={handleInputChange}
+                      id="refer"
+                    />
                     <label htmlFor="refer" className="font-bold">
                       Refer & Earn
                     </label>
@@ -310,7 +413,7 @@ export default function Filter({ setRender, render }) {
             }`}
               onClick={handleRenderContainer2}
             >
-              <h1 className="truncate">Successful, Pending, Failed</h1>
+              <h1 className="truncate">{trackValues2?.join(", ")}</h1>
               <span>
                 {!renderInputContainer2 ? (
                   <RiArrowDropDownLine size="25px" />
@@ -332,6 +435,9 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
+                      checked={Input.successful}
+                      name="successful"
+                      onChange={handleInputChange}
                       id="successful"
                     />
                     <label htmlFor="successful" className="font-bold">
@@ -342,14 +448,24 @@ export default function Filter({ setRender, render }) {
                     <input
                       type="checkbox"
                       className="input mr-2"
-                      id="pending"
+                      checked={Input.pending}
+                      name="pending"
+                      onChange={handleInputChange}
+                      id="Pending"
                     />
                     <label htmlFor="Pending" className="font-bold">
                       Pending
                     </label>
                   </div>
                   <div className="input-container flex mb-2">
-                    <input type="checkbox" className="input mr-2" id="failed" />
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      checked={Input.failed}
+                      name="failed"
+                      onChange={handleInputChange}
+                      id="failed"
+                    />
                     <label htmlFor="failed" className="font-bold">
                       Failed
                     </label>
@@ -367,7 +483,12 @@ export default function Filter({ setRender, render }) {
             </div>
 
             <div className="ml-2 w-2/4">
-              <button className="gray-button text-white w-full rounded-xl py-1">
+              <button
+                disabled={count > 0 ? false : true}
+                className={`text-white w-full rounded-xl py-1 ${
+                  count > 0 ? "black-button" : "gray-button"
+                }`}
+              >
                 Apply
               </button>
             </div>
