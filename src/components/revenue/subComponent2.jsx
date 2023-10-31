@@ -10,8 +10,8 @@ import Filter from "./filter";
 import FilterData from "./filterContext";
 
 export default function SubComponent2() {
-  const { count } = useContext(FilterData);
-  const [transactionsData, setTransactionsData] = useState([]);
+  const { count, transactionsData, setTransactionsData } =
+    useContext(FilterData);
   const [renderFilter, setRenderFilter] = useState(false);
 
   const handleRenderFilter = () => {
@@ -45,8 +45,6 @@ export default function SubComponent2() {
     const options = { year: "numeric", month: "short", day: "2-digit" };
     return new Date(date).toLocaleDateString(undefined, options);
   };
-
-  console.log(count);
 
   return (
     <section className="filter-section w-full flex flex-col mt-12">

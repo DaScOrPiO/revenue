@@ -32,9 +32,12 @@ export default function Filter({ setRender, render }) {
     handle7daysButtonClick,
     handleThisMonthClick,
     handleLast3MonthsClick,
+    transactionsData,
+    setTransactionsData,
+    filterTransactionsByDate,
+    filterTransactionsByType,
+    filterTransactionsByDateAndType,
   } = useContext(FilterData);
-
-  console.log(Input, filterTypes);
 
   const closeMe = () => {
     setRender(false);
@@ -45,9 +48,22 @@ export default function Filter({ setRender, render }) {
     getSelectedOptions();
   }, [Input]);
 
+  // useEffect(() => {
+  //   Input.dateFrom && Input.dateTo !== "" ? dateIsValid() : "";
+  //   filterTransactionsByDate();
+  // }, [Input.dateFrom, Input.dateTo]);
+
+  // useEffect(() => {
+  //   filterTypes.transactionTypes ? filterTransactionsByType() : "";
+  // }, [Input, filterTypes]);
+
   useEffect(() => {
-    Input.dateFrom && Input.dateTo !== "" ? dateIsValid() : "";
+    dateIsValid();
   }, [Input.dateFrom, Input.dateTo]);
+
+  useEffect(() => {
+    filterTransactionsByDateAndType();
+  }, [Input, filterTypes]);
 
   const dateIsValid = () => {
     const result = calculateDateDifference(Input.dateFrom, Input.dateTo);
@@ -65,6 +81,10 @@ export default function Filter({ setRender, render }) {
 
     if (Input.storeTransactions) {
       selectedOptions.push("Store Transactions");
+    }
+
+    if (Input.digitalProducts) {
+      selectedOptions.push("Digital Products");
     }
 
     if (Input.getTipped) {
@@ -343,6 +363,19 @@ export default function Filter({ setRender, render }) {
                     />
                     <label htmlFor="store-transactions" className="font-bold">
                       Store Transactions
+                    </label>
+                  </div>
+                  <div className="input-container flex mt-2 mb-2">
+                    <input
+                      type="checkbox"
+                      className="input mr-2"
+                      checked={Input.digitalProducts}
+                      name="digitalProducts"
+                      onChange={handleInputChange}
+                      id="digital"
+                    />
+                    <label htmlFor="digital" className="font-bold">
+                      Digital Products
                     </label>
                   </div>
                   <div className="input-container flex mb-2">
