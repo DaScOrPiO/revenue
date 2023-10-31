@@ -67,6 +67,55 @@ export function FilterContext({ children }) {
     setInput((prev) => ({ ...prev, dateTo: newDate.toLocaleString() }));
   };
 
+  function formatDate(inputDate) {
+    const options = { year: "numeric", month: "short", day: "2-digit" };
+    return new Date(inputDate).toLocaleDateString(undefined, options);
+  }
+
+  const handleTodayButtonClick = () => {
+    const dayRange = new Date();
+    const value = formatDate(dayRange);
+    setInput((prev) => ({
+      ...prev,
+      dateFrom: value,
+      dateTo: value,
+    }));
+  };
+
+  const handle7daysButtonClick = () => {
+    const today = new Date();
+    const sevenDays = new Date(today);
+    const sevenDaysAgo = sevenDays.setDate(today.getDate() - 7);
+    const value1 = formatDate(today);
+    const value2 = formatDate(sevenDaysAgo);
+
+    setInput((prev) => ({ ...prev, dateFrom: value2, dateTo: value1 }));
+  };
+
+  const handleThisMonthClick = () => {
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const value1 = formatDate(today);
+    const value2 = formatDate(firstDayOfMonth);
+
+    setInput((prev) => ({ ...prev, dateFrom: value2, dateTo: value1 }));
+  };
+
+  const handleLast3MonthsClick = () => {
+    const today = new Date();
+    const firstDayOfCurrentMonth = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    );
+    const threeMonthsAgo = new Date(firstDayOfCurrentMonth);
+    threeMonthsAgo.setMonth(firstDayOfCurrentMonth.getMonth() - 3);
+    const value1 = formatDate(threeMonthsAgo);
+    const value2 = formatDate(today);
+
+    setInput((prev) => ({ ...prev, dateFrom: value1, dateTo: value2 }));
+  };
+
   const handleFilterTypes = () => {
     let filterNumber = 0;
 
@@ -114,6 +163,11 @@ export function FilterContext({ children }) {
         handleDateChange,
         handleDateChange2,
         calculateDateDifference,
+        formatDate,
+        handleTodayButtonClick,
+        handle7daysButtonClick,
+        handleThisMonthClick,
+        handleLast3MonthsClick,
       }}
     >
       {children}

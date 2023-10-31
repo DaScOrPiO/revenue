@@ -27,6 +27,11 @@ export default function Filter({ setRender, render }) {
     handleDateChange,
     handleDateChange2,
     calculateDateDifference,
+    formatDate,
+    handleTodayButtonClick,
+    handle7daysButtonClick,
+    handleThisMonthClick,
+    handleLast3MonthsClick,
   } = useContext(FilterData);
 
   console.log(Input, filterTypes);
@@ -43,11 +48,6 @@ export default function Filter({ setRender, render }) {
   useEffect(() => {
     Input.dateFrom && Input.dateTo !== "" ? dateIsValid() : "";
   }, [Input.dateFrom, Input.dateTo]);
-
-  function formatDate(inputDate) {
-    const options = { year: "numeric", month: "short", day: "2-digit" };
-    return new Date(inputDate).toLocaleDateString(undefined, options);
-  }
 
   const dateIsValid = () => {
     const result = calculateDateDifference(Input.dateFrom, Input.dateTo);
@@ -191,22 +191,34 @@ export default function Filter({ setRender, render }) {
 
           <div className="flex justify-evenly items-center mt-5">
             <div>
-              <button className="white-button rounded-xl px-3 py-2 bg-white">
+              <button
+                className="white-button rounded-xl px-3 py-2 bg-white"
+                onClick={handleTodayButtonClick}
+              >
                 Today
               </button>
             </div>
             <div>
-              <button className="white-button rounded-xl px-3 py-2 bg-white">
+              <button
+                className="white-button rounded-xl px-3 py-2 bg-white"
+                onClick={handle7daysButtonClick}
+              >
                 Last 7days
               </button>
             </div>
             <div>
-              <button className="white-button rounded-xl px-3 py-2 bg-white">
+              <button
+                className="white-button rounded-xl px-3 py-2 bg-white"
+                onClick={handleThisMonthClick}
+              >
                 This month
               </button>
             </div>
             <div>
-              <button className="white-button rounded-xl px-3 py-2 bg-white">
+              <button
+                className="white-button rounded-xl px-3 py-2 bg-white"
+                onClick={handleLast3MonthsClick}
+              >
                 Last 3months
               </button>
             </div>
