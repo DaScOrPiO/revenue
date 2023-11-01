@@ -4,6 +4,7 @@ import linkInBio from "../../assets/link-in-bio.svg";
 import booking from "../../assets/bookings.svg";
 import mediaKit from "../../assets/media-kit.svg";
 import store from "../../assets/store.svg";
+import { motion } from "framer-motion";
 
 export default function PopupNav2() {
   const navData2 = [
@@ -35,7 +36,13 @@ export default function PopupNav2() {
   ];
 
   return (
-    <div className="popup-nav-2 w-1/4 fixed left-1/2 translate-x-1/4 top-24 px-4 py-4 rounded-xl">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.8 }}
+      className="popup-nav-2 w-1/4 fixed left-1/2 translate-x-1/4 top-24 px-4 py-4 rounded-xl"
+    >
       {navData2.map((item, index) => (
         <li
           key={index}
@@ -48,6 +55,6 @@ export default function PopupNav2() {
           </span>
         </li>
       ))}
-    </div>
+    </motion.div>
   );
 }

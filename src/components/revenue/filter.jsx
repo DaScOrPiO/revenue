@@ -211,7 +211,6 @@ export default function Filter({ setRender, render }) {
           animate={{ x: 0 }}
           exit={{ x: 500 }}
           transition={{ duration: 0.8 }}
-          onExitComplete={closeMe}
           className="filter-container lg:w-1/3 lg:h-screen md:max-h-auto h-auto overflow-auto fixed rounded-xl 
     right-0 lg:top-0 md:top-40 top-0 py-5 px-3 bg-white"
         >

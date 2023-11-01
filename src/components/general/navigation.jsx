@@ -16,6 +16,7 @@ import linkInBio from "../../assets/link-in-bio.svg";
 import booking from "../../assets/bookings.svg";
 import mediaKit from "../../assets/media-kit.svg";
 import store from "../../assets/store.svg";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Navigation() {
   const [activeNav, setActiveNav] = useState(null);
@@ -195,34 +196,45 @@ export default function Navigation() {
             </div>
           </div>
         </div>
-        {navPopup && (
-          <PopupNav
-            userDetails={userDetails}
-            setUserDetails={setUserDetails}
-            initials={initials}
-          />
-        )}
-        {navPopup2 && (
-          <div className="popup-nav-2 w-1/4 fixed left-1/2 translate-x-1/4 top-24 px-4 py-4 rounded-xl">
-            {navData2.map((item, index) => (
-              <li
-                key={index}
-                className="link-container flex items-center px-2 mt-2 cursor-pointer"
-                onClick={() => popup2Click(item)}
-              >
-                <img
-                  src={item.image}
-                  alt="image"
-                  className="link-image rounded-xl"
-                />
-                <span className="ml-2 py-2">
-                  <h5 className="font-bold">{item.text}</h5>
-                  <p>{item.message}</p>
-                </span>
-              </li>
-            ))}
-          </div>
-        )}
+        <AnimatePresence>
+          {navPopup && (
+            <PopupNav
+              userDetails={userDetails}
+              setUserDetails={setUserDetails}
+              initials={initials}
+            />
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {navPopup2 && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.8 }}
+              className="popup-nav-2 w-1/4 fixed left-1/2 translate-x-1/4 top-24 px-4 py-4 rounded-xl"
+            >
+              {navData2.map((item, index) => (
+                <li
+                  key={index}
+                  className="link-container flex items-center px-2 mt-2 cursor-pointer"
+                  onClick={() => popup2Click(item)}
+                >
+                  <img
+                    src={item.image}
+                    alt="image"
+                    className="link-image rounded-xl"
+                  />
+                  <span className="ml-2 py-2">
+                    <h5 className="font-bold">{item.text}</h5>
+                    <p>{item.message}</p>
+                  </span>
+                </li>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
