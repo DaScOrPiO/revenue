@@ -75,11 +75,20 @@ export default function Filter({ setRender, render }) {
 
   const handleApplyBtnClick = () => {
     setShowValues(true);
+    setRendarCalendar1(false);
+    setRendarCalendar2(false);
+    setRenderInputContainer(false);
+    setRenderInputContainer2(false);
   };
 
   const handleClearBtnClick = () => {
     setShowValues(false);
     uncheckInputs();
+
+    setRendarCalendar1(false);
+    setRendarCalendar2(false);
+    setRenderInputContainer(false);
+    setRenderInputContainer2(false);
   };
 
   const getSelectedOptions = () => {

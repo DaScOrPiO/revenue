@@ -10,6 +10,7 @@ import FixedSideNav from "./components/general/fixedSideNav";
 import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { FilterContext } from "./components/revenue/filterContext";
 
 function App() {
   return (
@@ -18,7 +19,15 @@ function App() {
         <Nav />
         <FixedSideNav />
         <Routes>
-          <Route path="/" index element={<Revenue />} />
+          <Route
+            path="/"
+            index
+            element={
+              <FilterContext>
+                <Revenue />
+              </FilterContext>
+            }
+          />
           <Route path="/home" element={<Home />} />
           <Route path="/crm" element={<Crm />} />
           <Route path="/analytic" element={<Analytic />} />
