@@ -21,7 +21,6 @@ import linkInBio from "../../assets/link-in-bio.svg";
 import booking from "../../assets/bookings.svg";
 import mediaKit from "../../assets/media-kit.svg";
 import store from "../../assets/store.svg";
-import { motion } from "framer-motion";
 
 export default function MobileNavigation() {
   const [activeNav, setActiveNav] = useState(null);
@@ -204,10 +203,9 @@ export default function MobileNavigation() {
         <div className="mobile-nav-content-container fixed right-8 py-4 bg-white rounded-xl w-2/4">
           <div className="nav-buttons flex flex-col justify-start w-1/2">
             {navData.map((item, index) => (
-              <motion.span
-                whileHover={{ backgroundColor: "#eff1f6", color: "#000" }}
+              <span
                 key={index}
-                className={`mx-3 mt-4 py-2 flex justify-start items-center rounded-xl cursor-pointer ${
+                className={`nav-item mx-3 mt-4 py-2 flex justify-start items-center rounded-xl cursor-pointer ${
                   index === activeNav ? "active-nav" : ""
                 }`}
                 onClick={() => handleNavClick(index)}
@@ -221,7 +219,7 @@ export default function MobileNavigation() {
                     </span>
                   ) : null}
                 </Link>
-              </motion.span>
+              </span>
             ))}
           </div>
 
