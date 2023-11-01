@@ -16,6 +16,7 @@ import linkInBio from "../../assets/link-in-bio.svg";
 import booking from "../../assets/bookings.svg";
 import mediaKit from "../../assets/media-kit.svg";
 import store from "../../assets/store.svg";
+import { motion } from "framer-motion";
 
 export default function Navigation() {
   const [activeNav, setActiveNav] = useState(null);
@@ -153,9 +154,10 @@ export default function Navigation() {
 
         <div className="nav-buttons flex justify-evenly w-1/2">
           {navData.map((item, index) => (
-            <span
+            <motion.span
+              whileHover={{ backgroundColor: "#eff1f6" }}
               key={index}
-              className={`mx-3 px-2 flex items-center ${
+              className={`mx-3 px-2 flex items-center rounded-xl cursor-pointer ${
                 index === activeNav ? "active-nav" : ""
               }`}
               onClick={() => handleNavClick(index)}
@@ -169,7 +171,7 @@ export default function Navigation() {
                   </span>
                 ) : null}
               </Link>
-            </span>
+            </motion.span>
           ))}
         </div>
 

@@ -159,6 +159,15 @@ body {
   color: #eff1f6;
 }
 
+.circle-shape {
+  border-radius: 100px;
+  border: 2px solid #56616B;
+
+  /* Elevation/Light Mode/100 */
+  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
+    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+}
+
 .filter-container {
   box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
     0px 2px 6px 0px rgba(45, 59, 67, 0.06);
