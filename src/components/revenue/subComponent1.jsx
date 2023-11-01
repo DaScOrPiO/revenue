@@ -12,9 +12,17 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { toast } from "react-toastify";
 
 export default function SubComponent1() {
   const [balanceDetails, setBalanceDetails] = useState([]);
+  const customId = "custom-id-yes";
+
+  const notify = (message) => {
+    toast.error(message, {
+      toastId: customId,
+    });
+  };
 
   const getWalletDetails = async () => {
     try {
@@ -23,7 +31,11 @@ export default function SubComponent1() {
         setBalanceDetails(req.data);
       }
     } catch (err) {
-      console.log(err);
+      if (!err.response) {
+        notify("Network Problem, can't fetch wallet balance 😥");
+      } else {
+        notify("Something went wrong while fetching wallet balance ☹");
+      }
     }
   };
 
@@ -34,14 +46,15 @@ export default function SubComponent1() {
   ChartJs.register(LineElement, CategoryScale, LinearScale, PointElement);
 
   const data = {
-    labels: ["April 1, 2022", "April 30, 2022"],
+    labels: ["April 1, 2022", "", "", "", "April 30, 2022"],
     datasets: [
       {
         label: "# of Votes",
-        data: [0, 20],
+        data: [5, 40, 5, 38, 10, 2],
         borderColor: "red",
         fill: false,
         borderWidth: 1,
+        tension: 0.4,
       },
     ],
   };
@@ -61,6 +74,19 @@ export default function SubComponent1() {
       legend: {
         display: false,
         fontSize: 40,
+      },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          // Customize the tooltip to display specific data points
+          label: function (context) {
+            const dataIndex = context.dataIndex;
+            if (dataIndex !== 0 && dataIndex !== data.labels.length - 1) {
+              return ""; // Hide the tooltip for empty data points
+            }
+            return context.dataset.data[dataIndex];
+          },
+        },
       },
     },
     elements: {

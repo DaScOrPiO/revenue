@@ -1,6 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: Degular;
+  src: url(./assets/fonts/degular-regular.otf);
+}
+
+body {
+  font-family: Degular;
+}
 
 .nav-container {
   .nav-content {
@@ -61,7 +69,37 @@
       &:hover {
         cursor: pointer;
         filter: initial;
-        transition: 0.5s ease-out;
+        position: relative;
+      }
+    }
+    &:hover .tooltip {
+      display: block;
+    }
+
+    .tooltip {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50px;
+      transform: translateY(-50%);
+      width: 100px;
+      height: 30px;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      line-height: 30px;
+      border-radius: 5px;
+      z-index: 1;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent black transparent transparent;
       }
     }
   }
@@ -93,7 +131,7 @@
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  color: #56616B;
+  color: #56616b;
 }
 
 .react-calendar__month-view__days__day--active-month {
@@ -113,6 +151,12 @@
 
 .gray-button {
   background-color: #eff1f6;
+  color: #131316;
+}
+
+.black-button {
+  background-color: #131316;
+  color: #eff1f6;
 }
 
 .filter-container {

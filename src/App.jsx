@@ -8,6 +8,8 @@ import Home from "./pages/home";
 import Nav from "./components/general/nav";
 import FixedSideNav from "./components/general/fixedSideNav";
 import "./App.scss";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -19,9 +21,14 @@ function App() {
           <Route path="/" index element={<Revenue />} />
           <Route path="/home" element={<Home />} />
           <Route path="/crm" element={<Crm />} />
-          {/* <Route element={<Apps />} /> */}
           <Route path="/analytic" element={<Analytic />} />
         </Routes>
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={true}
+          theme="light"
+        />
       </BrowserRouter>
     </>
   );
