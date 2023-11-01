@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { baseUrl, get_wallet } from "../general/endpoint url/file";
 import axios from "axios";
 import info from "../../assets/info.svg";
@@ -13,10 +13,39 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { toast } from "react-toastify";
+import FilterData from "./filterContext";
 
 export default function SubComponent1() {
-  const [balanceDetails, setBalanceDetails] = useState([]);
+  const [priceVal, setPriceVal] = useState([]);
+  const [dateVal, setDateVal] = useState([]);
+  const [dateByFilter, setDateByFilter] = useState([]);
+  const [PriceByFilter, setPriceByFilter] = useState([]);
   const customId = "custom-id-yes";
+
+  const {
+    filteredDateValues,
+    transactionsData,
+    Input,
+    filterTypes,
+    balanceDetails,
+    setBalanceDetails,
+  } = useContext(FilterData);
+
+  const setGraphData = () => {
+    const dateLine = transactionsData?.map((item, index) => item.date);
+    const Price = transactionsData?.map((item, index) => item.amount);
+    setPriceVal(Price);
+    setDateVal(dateLine);
+
+    const dateFilter = filteredDateValues?.map((item, index) => item.date);
+    const priceFilter = filteredDateValues?.map((item, index) => item.amount);
+    setPriceByFilter(priceFilter);
+    setDateByFilter(dateFilter);
+  };
+
+  useEffect(() => {
+    setGraphData();
+  }, [Input, filterTypes, transactionsData, filteredDateValues]);
 
   const notify = (message) => {
     toast.error(message, {
@@ -46,11 +75,21 @@ export default function SubComponent1() {
   ChartJs.register(LineElement, CategoryScale, LinearScale, PointElement);
 
   const data = {
-    labels: ["April 1, 2022", "", "", "", "April 30, 2022"],
+    labels:
+      filteredDateValues.length > 0 && filterTypes
+        ? dateByFilter?.map((item, index) =>
+            index !== 0 && index !== dateByFilter?.length - 1 ? "" : item
+          )
+        : dateVal?.map((item, index) =>
+            index !== 0 && index !== dateVal?.length - 1 ? "" : item
+          ),
     datasets: [
       {
         label: "# of Votes",
-        data: [5, 40, 5, 38, 10, 2],
+        data:
+          filteredDateValues.length > 0 && filterTypes
+            ? PriceByFilter?.map((item) => item)
+            : priceVal?.map((item) => item),
         borderColor: "red",
         fill: false,
         borderWidth: 1,

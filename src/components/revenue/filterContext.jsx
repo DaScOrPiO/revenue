@@ -11,6 +11,7 @@ export function FilterContext({ children }) {
   const [filteredDateValues, setFilteredDateValues] = useState([]);
   const [daysDiff, setDaysDiff] = useState(null);
   const [showValues, setShowValues] = useState(false);
+  const [balanceDetails, setBalanceDetails] = useState([]);
 
   const [filterTypes, setFilterTypes] = useState({
     dateRange: false,
@@ -46,6 +47,13 @@ export function FilterContext({ children }) {
       failed: false,
       dateFrom: "",
       dateTo: "",
+    }));
+
+    setFilterTypes((prev) => ({
+      ...prev,
+      dateRange: false,
+      transactionTypes: false,
+      transactionStatus: false,
     }));
   };
 
@@ -249,6 +257,8 @@ export function FilterContext({ children }) {
         showValues,
         setShowValues,
         uncheckInputs,
+        balanceDetails,
+        setBalanceDetails,
       }}
     >
       {children}

@@ -79,7 +79,9 @@ export default function SubComponent2() {
           </h1>
           <p>
             {showValues && Input.dateFrom !== "" && Input.dateTo !== ""
-              ? `Your transactions for the last ${daysDiff} days`
+              ? `Your transactions ${
+                  daysDiff > 0 ? `for the last ${daysDiff} days` : `Today`
+                }`
               : "Your all time transactions"}
           </p>
         </div>
@@ -118,7 +120,7 @@ export default function SubComponent2() {
       </section>
 
       <section className="transaction-history w-full mt-12">
-        {filteredTransactions.length <= 0 && filteredDateValues <= 0 ? (
+        {showValues && filteredDateValues <= 0 ? (
           <NoData />
         ) : !showValues ? (
           filteredTransactions?.map((item, index) => (
