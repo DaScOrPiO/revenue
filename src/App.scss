@@ -6,6 +6,12 @@
   src: url(./assets/fonts/degular-regular.otf);
 }
 
+$box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
+  0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+
+$border: 2px solid #fff;
+$white: #fff;
+
 body {
   font-family: Degular;
 }
@@ -13,19 +19,17 @@ body {
 .nav-container {
   .nav-content {
     border-radius: 100px;
-    border: 2px solid #fff;
-    background: #fff;
-    box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-      0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+    border: $border;
+    background: $white;
+    box-shadow: $box-shadow;
   }
 }
 
 .popup-nav,
 .popup-nav-2 {
-  border: 2px solid #fff;
-  background: #fff;
-  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  border: $border;
+  background: $white;
+  box-shadow: $box-shadow;
   .user-details {
     .user-initials {
       // width: 20%;
@@ -39,17 +43,14 @@ body {
     .link-image {
       width: 20%;
       height: 50%;
-      border: 2px solid #fff;
-      // background: #fff;
-      box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-        0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+      border: $border;
+      box-shadow: $box-shadow;
     }
     &:hover {
       border-radius: 100px;
-      border: 2px solid #fff;
-      background: #fff;
-      box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-        0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+      border: $border;
+      background: $white;
+      box-shadow: $box-shadow;
       transition: 0.8s ease-in;
       .link-image {
         box-shadow: none;
@@ -60,8 +61,7 @@ body {
 }
 
 .side-nav {
-  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  box-shadow: $box-shadow;
   transition: 0.8s ease-in;
   .image-container {
     .image {
@@ -85,7 +85,7 @@ body {
       width: 100px;
       height: 30px;
       background-color: #000;
-      color: #fff;
+      color: $white;
       text-align: center;
       line-height: 30px;
       border-radius: 5px;
@@ -115,8 +115,7 @@ body {
 .checkbox-container,
 .checkbox-container2,
 .calendar {
-  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  box-shadow: $box-shadow;
   transition: 0.8s ease-in;
 }
 
@@ -127,7 +126,7 @@ body {
 
 .react-calendar__tile--active {
   background: #131316 !important; // Change the background color for the selected date
-  color: #fff !important; // Change the text color for the selected date
+  color: $white !important; // Change the text color for the selected date
 }
 
 .react-calendar__month-view__weekdays__weekday {
@@ -142,7 +141,7 @@ body {
 .white-button {
   border-radius: 100px;
   border: 1px solid #eff1f6;
-  background: #fff;
+  background: $white;
 }
 
 .overlay {
@@ -159,9 +158,16 @@ body {
   color: #eff1f6;
 }
 
+.circle-shape {
+  border-radius: 100px;
+  border: 2px solid #56616b;
+
+  /* Elevation/Light Mode/100 */
+  box-shadow: $box-shadow;
+}
+
 .filter-container {
-  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  box-shadow: $box-shadow;
 }
 
 .active-link-image {
@@ -171,16 +177,22 @@ body {
 
 .active-nav-2 {
   border-radius: 100px;
-  border: 2px solid #fff;
-  background: #fff;
-  box-shadow: 0px 2px 4px 0px rgba(45, 59, 67, 0.05),
-    0px 2px 6px 0px rgba(45, 59, 67, 0.06);
+  border: $border;
+  background: $white;
+  box-shadow: $box-shadow;
+}
+
+.nav-item {
+  &:hover {
+    background-color: #eff1f6;
+    color: #131316;
+  }
 }
 
 .active-nav {
   border-radius: 100px;
   background-color: #131316;
-  color: #fff;
+  color: $white;
 }
 
 .green-text {

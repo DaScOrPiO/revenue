@@ -29,6 +29,7 @@ export default function SubComponent1() {
     filterTypes,
     balanceDetails,
     setBalanceDetails,
+    formatDate,
   } = useContext(FilterData);
 
   const setGraphData = () => {
@@ -78,14 +79,16 @@ export default function SubComponent1() {
     labels:
       filteredDateValues.length > 0 && filterTypes
         ? dateByFilter?.map((item, index) =>
-            index !== 0 && index !== dateByFilter?.length - 1 ? "" : item
+            index !== 0 && index !== dateByFilter?.length - 1
+              ? ""
+              : formatDate(item)
           )
         : dateVal?.map((item, index) =>
-            index !== 0 && index !== dateVal?.length - 1 ? "" : item
+            index !== 0 && index !== dateVal?.length - 1 ? "" : formatDate(item)
           ),
     datasets: [
       {
-        label: "# of Votes",
+        label: "# of Transactions",
         data:
           filteredDateValues.length > 0 && filterTypes
             ? PriceByFilter?.map((item) => item)
@@ -93,7 +96,7 @@ export default function SubComponent1() {
         borderColor: "red",
         fill: false,
         borderWidth: 1,
-        tension: 0.4,
+        tension: 0.8,
       },
     ],
   };

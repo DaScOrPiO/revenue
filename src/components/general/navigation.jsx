@@ -155,7 +155,7 @@ export default function Navigation() {
           {navData.map((item, index) => (
             <span
               key={index}
-              className={`mx-3 px-2 flex items-center ${
+              className={`nav-item mx-3 px-2 flex items-center rounded-xl cursor-pointer ${
                 index === activeNav ? "active-nav" : ""
               }`}
               onClick={() => handleNavClick(index)}

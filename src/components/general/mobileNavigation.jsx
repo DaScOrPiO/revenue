@@ -205,7 +205,7 @@ export default function MobileNavigation() {
             {navData.map((item, index) => (
               <span
                 key={index}
-                className={`mx-3 mt-4 py-2 flex justify-start items-center ${
+                className={`nav-item mx-3 mt-4 py-2 flex justify-start items-center rounded-xl cursor-pointer ${
                   index === activeNav ? "active-nav" : ""
                 }`}
                 onClick={() => handleNavClick(index)}
