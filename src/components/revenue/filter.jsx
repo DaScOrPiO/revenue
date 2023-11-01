@@ -16,7 +16,6 @@ export default function Filter({ setRender, render }) {
   const [renderCalendar2, setRendarCalendar2] = useState(false);
   const [trackValues, setTrackValues] = useState();
   const [trackValues2, setTrackValues2] = useState();
-  const [daysDiff, setDaysDiff] = useState(null);
 
   const {
     Input,
@@ -32,11 +31,10 @@ export default function Filter({ setRender, render }) {
     handle7daysButtonClick,
     handleThisMonthClick,
     handleLast3MonthsClick,
-    transactionsData,
-    setTransactionsData,
-    filterTransactionsByDate,
-    filterTransactionsByType,
     filterTransactionsByDateAndType,
+    setDaysDiff,
+    setShowValues,
+    uncheckInputs,
   } = useContext(FilterData);
 
   const closeMe = () => {
@@ -73,6 +71,15 @@ export default function Filter({ setRender, render }) {
     } else {
       toast.error(result.message);
     }
+  };
+
+  const handleApplyBtnClick = () => {
+    setShowValues(true);
+  };
+
+  const handleClearBtnClick = () => {
+    setShowValues(false);
+    uncheckInputs();
   };
 
   const getSelectedOptions = () => {
@@ -365,19 +372,6 @@ export default function Filter({ setRender, render }) {
                       Store Transactions
                     </label>
                   </div>
-                  <div className="input-container flex mt-2 mb-2">
-                    <input
-                      type="checkbox"
-                      className="input mr-2"
-                      checked={Input.digitalProducts}
-                      name="digitalProducts"
-                      onChange={handleInputChange}
-                      id="digital"
-                    />
-                    <label htmlFor="digital" className="font-bold">
-                      Digital Products
-                    </label>
-                  </div>
                   <div className="input-container flex mb-2">
                     <input
                       type="checkbox"
@@ -522,13 +516,17 @@ export default function Filter({ setRender, render }) {
 
           <div className="flex mt-56">
             <div className="mr-2 w-2/4">
-              <button className="white-button bg-white w-full rounded-xl py-1">
+              <button
+                onClick={handleClearBtnClick}
+                className="white-button bg-white w-full rounded-xl py-1"
+              >
                 Clear
               </button>
             </div>
 
             <div className="ml-2 w-2/4">
               <button
+                onClick={handleApplyBtnClick}
                 disabled={count > 0 ? false : true}
                 className={`text-white w-full rounded-xl py-1 ${
                   count > 0 ? "black-button" : "gray-button"

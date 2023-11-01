@@ -12,9 +12,17 @@ import {
   Tooltip,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { toast } from "react-toastify";
 
 export default function SubComponent1() {
   const [balanceDetails, setBalanceDetails] = useState([]);
+  const customId = "custom-id-yes";
+
+  const notify = (message) => {
+    toast.error(message, {
+      toastId: customId,
+    });
+  };
 
   const getWalletDetails = async () => {
     try {
@@ -23,7 +31,11 @@ export default function SubComponent1() {
         setBalanceDetails(req.data);
       }
     } catch (err) {
-      console.log(err);
+      if (!err.response) {
+        notify("Network Problem, can't fetch wallet balance 😥");
+      } else {
+        notify("Something went wrong while fetching wallet balance ☹");
+      }
     }
   };
 

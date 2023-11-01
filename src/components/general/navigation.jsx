@@ -183,7 +183,7 @@ export default function Navigation() {
           </div>
 
           <div
-            className="switch flex cursor-pointer justify-between items-center rounded-3xl bg-gray-300 w-1/4"
+            className="switch flex cursor-pointer justify-between items-center rounded-3xl gray-button w-1/4"
             onClick={renderPopupNav}
           >
             <div className="circle-shape mr-2 w-2/4 text-center rounded-full bg-black text-white">

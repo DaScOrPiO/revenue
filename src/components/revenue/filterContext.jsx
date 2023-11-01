@@ -9,6 +9,8 @@ export function FilterContext({ children }) {
   const [count, setCount] = useState(null);
   const [transactionsData, setTransactionsData] = useState([]);
   const [filteredDateValues, setFilteredDateValues] = useState([]);
+  const [daysDiff, setDaysDiff] = useState(null);
+  const [showValues, setShowValues] = useState(false);
 
   const [filterTypes, setFilterTypes] = useState({
     dateRange: false,
@@ -18,7 +20,6 @@ export function FilterContext({ children }) {
 
   const [Input, setInput] = useState({
     storeTransactions: false,
-    digitalProducts: false,
     getTipped: false,
     withdrawal: false,
     chargebacks: false,
@@ -30,6 +31,23 @@ export function FilterContext({ children }) {
     dateFrom: "",
     dateTo: "",
   });
+
+  const uncheckInputs = () => {
+    setInput((prev) => ({
+      ...prev,
+      storeTransactions: false,
+      getTipped: false,
+      withdrawal: false,
+      chargebacks: false,
+      cashback: false,
+      refer: false,
+      successful: false,
+      pending: false,
+      failed: false,
+      dateFrom: "",
+      dateTo: "",
+    }));
+  };
 
   // Calculate date range
   const calculateDateDifference = (dateFrom, dateTo) => {
@@ -78,7 +96,7 @@ export function FilterContext({ children }) {
     }
 
     if (filterTypes.transactionTypes) {
-      // Create an array to store the selected types
+      // Array to store the selected types
       const selectedTypes = [];
 
       if (Input.storeTransactions) selectedTypes.push("storeTransactions");
@@ -87,19 +105,10 @@ export function FilterContext({ children }) {
       if (Input.cashback) selectedTypes.push("cash_backs");
       if (Input.chargebacks) selectedTypes.push("charge_backs");
       if (Input.refer) selectedTypes.push("referral");
-      if (Input.digitalProducts) selectedTypes.push("digital_product");
 
       // Filter based on selected types
       if (selectedTypes.length > 0) {
-        if (Input.withdrawal) {
-          data = data.filter((item) =>
-            selectedTypes.includes(item?.type)
-          );
-        } else {
-          data = data.filter((item) =>
-            selectedTypes.includes(item?.metadata?.type)
-          );
-        }
+        data = data.filter((item) => selectedTypes.includes(item?.type));
       }
     }
 
@@ -118,25 +127,8 @@ export function FilterContext({ children }) {
     }
 
     setFilteredDateValues(data);
-    console.log(data, "filtered data");
-    console.log(filteredDateValues);
+    // console.log(filteredDateValues, "is filtered");
   };
-
-  // const filterTransactionsByDate = () => {
-  //   if (Input.dateFrom !== "" && Input.dateTo !== "") {
-  //     const filtered = transactionsData?.filter((item) => {
-  //       const transactionDate = new Date(item?.date);
-  //       const dateFrom = new Date(Input?.dateFrom);
-  //       const dateTo = new Date(Input?.dateTo);
-  //       return transactionDate >= dateFrom && transactionDate <= dateTo;
-  //     });
-  //     console.log(filtered);
-  //     setFilteredDateValues(filtered);
-  //     transactionValues.push(filteredDateValues);
-  //   }
-  // };
-
-  const filterTransactionsByType = () => {};
 
   const handleDateChange = (newDate) => {
     setInput((prev) => ({ ...prev, dateFrom: newDate.toLocaleString() }));
@@ -250,9 +242,13 @@ export function FilterContext({ children }) {
         handleLast3MonthsClick,
         transactionsData,
         setTransactionsData,
-        // filterTransactionsByDate,
-        filterTransactionsByType,
         filterTransactionsByDateAndType,
+        filteredDateValues,
+        daysDiff,
+        setDaysDiff,
+        showValues,
+        setShowValues,
+        uncheckInputs,
       }}
     >
       {children}
