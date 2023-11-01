@@ -96,7 +96,7 @@ export default function SubComponent1() {
         borderColor: "red",
         fill: false,
         borderWidth: 1,
-        tension: 0.4,
+        tension: 0.8,
       },
     ],
   };

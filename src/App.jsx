@@ -5,6 +5,7 @@ import Apps from "./pages/apps";
 import Crm from "./pages/crm";
 import Revenue from "./pages/revenue";
 import Home from "./pages/home";
+import NoPage from "./components/general/NoPage";
 import Nav from "./components/general/nav";
 import FixedSideNav from "./components/general/fixedSideNav";
 import "./App.scss";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/crm" element={<Crm />} />
           <Route path="/analytic" element={<Analytic />} />
+          <Route path="*" element={<NoPage />} />
         </Routes>
         <ToastContainer
           position="top-left"
