@@ -9,9 +9,9 @@ import {
 } from "react-icons/ai";
 import { MdOutlineReceiptLong, MdOutlineSwitchAccount } from "react-icons/md";
 import { GoSignOut } from "react-icons/go";
+import { motion } from "framer-motion";
 
-export default function PopupNav({userDetails, setUserDetails, initials}) {
-  
+export default function PopupNav({ userDetails, setUserDetails, initials }) {
   const popupNavData = [
     {
       icon: <AiOutlineSetting size="20px" />,
@@ -44,7 +44,13 @@ export default function PopupNav({userDetails, setUserDetails, initials}) {
   ];
 
   return (
-    <div className="popup-nav rounded-xl px-4 py-4 fixed right-5 top-24 lg:w-1/4">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.8 }}
+      className="popup-nav rounded-xl px-4 py-4 fixed right-5 top-24 lg:w-1/4"
+    >
       <div className="user-details flex items-center">
         <div className="user-initials rounded-full mr-2 px-1 bg-black text-white">
           {initials}
@@ -64,6 +70,6 @@ export default function PopupNav({userDetails, setUserDetails, initials}) {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

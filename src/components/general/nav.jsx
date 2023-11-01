@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Navigation from "./navigation";
 import MobileNavigation from "./mobileNavigation";
+import { AnimatePresence } from "framer-motion";
 
 export default function Nav() {
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 767);
@@ -18,5 +19,15 @@ export default function Nav() {
     };
   }, []);
 
-  return <div>{isMobileView ? <MobileNavigation /> : <Navigation />}</div>;
+  return (
+    <div>
+      {isMobileView ? (
+        <AnimatePresence>
+          {isMobileView && <MobileNavigation />}
+        </AnimatePresence>
+      ) : (
+        <Navigation />
+      )}
+    </div>
+  );
 }

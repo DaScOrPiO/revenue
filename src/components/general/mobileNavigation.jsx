@@ -21,6 +21,7 @@ import linkInBio from "../../assets/link-in-bio.svg";
 import booking from "../../assets/bookings.svg";
 import mediaKit from "../../assets/media-kit.svg";
 import store from "../../assets/store.svg";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function MobileNavigation() {
   const [activeNav, setActiveNav] = useState(null);
@@ -182,8 +183,13 @@ export default function MobileNavigation() {
   }, []);
 
   return (
-    <>
-      <nav className="nav-container w-full py-2 px-5">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.nav className="nav-container w-full py-2 px-5">
         <div className="nav-content mx-auto py-4 rounded-3xl flex justify-between">
           <div>
             <img src={mainStackLogo} alt="logo" />
@@ -197,7 +203,7 @@ export default function MobileNavigation() {
             )}
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {renderNavContent && (
         <div className="mobile-nav-content-container fixed right-8 py-4 bg-white rounded-xl w-2/4">
@@ -247,38 +253,51 @@ export default function MobileNavigation() {
           </div>
           {navPopup && (
             <span ref={ref1} onClick={handlePop1Click}>
-              <PopupNav
-                userDetails={userDetails}
-                setUserDetails={setUserDetails}
-                initials={initials}
-              />
+              <AnimatePresence>
+                {navPopup && (
+                  <PopupNav
+                    userDetails={userDetails}
+                    setUserDetails={setUserDetails}
+                    initials={initials}
+                  />
+                )}
+              </AnimatePresence>
             </span>
           )}
-          {navPopup2 && (
-            <span ref={ref2} onClick={closeRenderNav2}>
-              <div className="popup-nav-2 w-1/4 fixed left-1/2 translate-x-1/4 top-24 px-4 py-4 rounded-xl">
-                {navData2.map((item, index) => (
-                  <li
-                    key={index}
-                    className="link-container flex items-center px-2 mt-2 cursor-pointer"
-                    onClick={() => popup2Click(item)}
-                  >
-                    <img
-                      src={item.image}
-                      alt="image"
-                      className="link-image rounded-xl"
-                    />
-                    <span className="ml-2 py-2">
-                      <h5 className="font-bold">{item.text}</h5>
-                      <p>{item.message}</p>
-                    </span>
-                  </li>
-                ))}
-              </div>
-            </span>
-          )}
+          <AnimatePresence>
+            {navPopup2 && (
+              <motion.span
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.8 }}
+                ref={ref2}
+                onClick={closeRenderNav2}
+              >
+                <div className="popup-nav-2 w-1/4 fixed left-1/2 translate-x-1/4 top-24 px-4 py-4 rounded-xl">
+                  {navData2.map((item, index) => (
+                    <li
+                      key={index}
+                      className="link-container flex items-center px-2 mt-2 cursor-pointer"
+                      onClick={() => popup2Click(item)}
+                    >
+                      <img
+                        src={item.image}
+                        alt="image"
+                        className="link-image rounded-xl"
+                      />
+                      <span className="ml-2 py-2">
+                        <h5 className="font-bold">{item.text}</h5>
+                        <p>{item.message}</p>
+                      </span>
+                    </li>
+                  ))}
+                </div>
+              </motion.span>
+            )}
+          </AnimatePresence>
         </div>
       )}
-    </>
+    </motion.div>
   );
 }
