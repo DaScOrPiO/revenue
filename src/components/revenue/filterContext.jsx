@@ -12,6 +12,8 @@ export function FilterContext({ children }) {
   const [daysDiff, setDaysDiff] = useState(null);
   const [showValues, setShowValues] = useState(false);
   const [balanceDetails, setBalanceDetails] = useState([]);
+  const [loadStatus1, setLoadStatus1] = useState(false);
+  const [loadStatus2, setLoadStatus2] = useState(false);
 
   const [filterTypes, setFilterTypes] = useState({
     dateRange: false,
@@ -259,6 +261,10 @@ export function FilterContext({ children }) {
         uncheckInputs,
         balanceDetails,
         setBalanceDetails,
+        loadStatus1,
+        setLoadStatus1,
+        loadStatus2,
+        setLoadStatus2,
       }}
     >
       {children}

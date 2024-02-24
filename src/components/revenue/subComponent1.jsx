@@ -20,6 +20,7 @@ export default function SubComponent1() {
   const [dateVal, setDateVal] = useState([]);
   const [dateByFilter, setDateByFilter] = useState([]);
   const [PriceByFilter, setPriceByFilter] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const customId = "custom-id-yes";
 
   const {
@@ -30,6 +31,7 @@ export default function SubComponent1() {
     balanceDetails,
     setBalanceDetails,
     formatDate,
+    setLoadStatus1,
   } = useContext(FilterData);
 
   const setGraphData = () => {
@@ -57,8 +59,13 @@ export default function SubComponent1() {
   const getWalletDetails = async () => {
     try {
       const req = await axios.get(baseUrl + get_wallet);
-      if (req.status === 200) {
-        setBalanceDetails(req.data);
+      if (!req.status) {
+        setLoadStatus1(true);
+      } else {
+        if (req.status === 200) {
+          setBalanceDetails(req.data);
+          setLoadStatus1(false);
+        }
       }
     } catch (err) {
       if (!err.response) {

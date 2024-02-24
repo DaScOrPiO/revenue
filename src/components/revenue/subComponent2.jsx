@@ -20,6 +20,7 @@ export default function SubComponent2() {
     daysDiff,
     Input,
     showValues,
+    setLoadStatus2,
   } = useContext(FilterData);
   const [renderFilter, setRenderFilter] = useState(false);
   const customId = "custom-id-yes1";
@@ -37,8 +38,13 @@ export default function SubComponent2() {
   const getTransactions = async () => {
     try {
       const req = await axios.get(baseUrl + get_transactions);
-      if (req.status === 200) {
-        setTransactionsData(req.data);
+      if (!req.status) {
+        setLoadStatus2(true);
+      } else {
+        if (req.status === 200) {
+          setTransactionsData(req.data);
+          setLoadStatus2(false);
+        }
       }
     } catch (err) {
       if (!err.response) {
